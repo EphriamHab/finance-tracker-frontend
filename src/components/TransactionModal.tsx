@@ -118,7 +118,7 @@ export default function TransactionModal({
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+        <div className="fixed inset-0 bg-[rgba(0,0,0,0.3)] backdrop-blur-[1px]  z-50 flex items-center justify-center  p-4">
             <div className="bg-white w-full max-w-md rounded-4xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
                 <div className="p-8">
                     <div className="flex justify-between items-center mb-8">
