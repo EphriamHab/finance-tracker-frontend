@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Link } from 'react-router-dom';
-import { ArrowRight, BarChart3, PieChart, LayoutDashboard, ListChecks } from 'lucide-react';
+import { ArrowRight, PieChart, LayoutDashboard, ListChecks } from 'lucide-react';
 
 const LandingPage = () => {
   return (
@@ -16,15 +16,12 @@ const LandingPage = () => {
         </div>
       </nav>
       <header className="container mx-auto px-6 pt-16 pb-24 text-center">
-        {/* <span className="bg-indigo-50 text-indigo-600 px-4 py-2 rounded-full text-sm font-bold tracking-wide uppercase mb-6 inline-block">
-          Take-Home Project 1: Personal Finance Tracker
-        </span> */}
         <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 mb-8 leading-[1.1]">
           Visualize your <br />
           <span className="text-indigo-600">financial summary.</span>
         </h1>
         <p className="text-lg text-slate-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-          A full-stack solution to track income and expenses effortlessly. 
+          A full-stack solution to track income and expenses effortlessly.
           Manage your transactions and view real-time balance data in one professional dashboard.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -40,20 +37,20 @@ const LandingPage = () => {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-12">
             {[
-              { 
-                icon: <LayoutDashboard className="text-indigo-600" size={32}/>, 
-                title: 'Financial Summary', 
-                desc: 'Get a clear view of total income, total expenses, and your current balance at a glance.' 
+              {
+                icon: <LayoutDashboard className="text-indigo-600" size={32} />,
+                title: 'Financial Summary',
+                desc: 'Get a clear view of total income, total expenses, and your current balance at a glance.'
               },
-              { 
-                icon: <ListChecks className="text-indigo-600" size={32}/>, 
-                title: 'Transaction Management', 
-                desc: 'Easily create, update, and delete transactions with detailed category and description fields.' 
+              {
+                icon: <ListChecks className="text-indigo-600" size={32} />,
+                title: 'Transaction Management',
+                desc: 'Easily create, update, and delete transactions with detailed category and description fields.'
               },
-              { 
-                icon: <PieChart className="text-indigo-600" size={32}/>, 
-                title: 'Categorized Spending', 
-                desc: 'See exactly where your money goes with automatic totals grouped by category.' 
+              {
+                icon: <PieChart className="text-indigo-600" size={32} />,
+                title: 'Categorized Spending',
+                desc: 'See exactly where your money goes with automatic totals grouped by category.'
               }
             ].map((feature, i) => (
               <div key={i} className="p-8 rounded-3xl bg-[#F8F9FE] border border-transparent hover:border-indigo-100 transition-all">

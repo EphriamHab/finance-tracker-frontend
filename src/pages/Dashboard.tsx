@@ -31,32 +31,14 @@ export default function DashboardPage() {
   const loading = summaryLoading || transactionsLoading;
 
   const chartData = useMemo(() => {
-    if (!recent?.data) return [];
+    if (!summary?.byCategory) return [];
 
-    const grouped: Record<string, { income: number; expense: number }> = {};
-
-    recent.data.forEach((tx: any) => {
-      const date = new Date(tx.date).toLocaleDateString("en-US", {
-        month: "short",
-      });
-
-      if (!grouped[date]) {
-        grouped[date] = { income: 0, expense: 0 };
-      }
-
-      if (tx.type === "income") {
-        grouped[date].income += tx.amount;
-      } else {
-        grouped[date].expense += tx.amount;
-      }
-    });
-
-    return Object.keys(grouped).map((date) => ({
-      name: date,
-      income: grouped[date].income,
-      expense: grouped[date].expense,
+    return summary.byCategory.map((item: any) => ({
+      name: item.category,
+      amount: item._sum?.amount || 0,
     }));
-  }, [recent]);
+  }, [summary]);
+
 
   const handleExport = () => {
     if (!recent?.data?.length) return;
@@ -121,49 +103,18 @@ export default function DashboardPage() {
               <div className="w-full h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={chartData}>
-                    <defs>
-                      <linearGradient
-                        id="incomeGradient"
-                        x1="0"
-                        y1="0"
-                        x2="0"
-                        y2="1"
-                      >
-                        <stop
-                          offset="5%"
-                          stopColor="#6366f1"
-                          stopOpacity={0.2}
-                        />
-                        <stop
-                          offset="95%"
-                          stopColor="#6366f1"
-                          stopOpacity={0}
-                        />
-                      </linearGradient>
-                    </defs>
-
-                    <CartesianGrid
-                      strokeDasharray="3 3"
-                      vertical={false}
-                    />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
 
                     <Area
                       type="monotone"
-                      dataKey="income"
+                      dataKey="amount"
                       stroke="#6366f1"
                       strokeWidth={3}
-                      fill="url(#incomeGradient)"
-                    />
-
-                    <Area
-                      type="monotone"
-                      dataKey="expense"
-                      stroke="#f59e0b"
-                      strokeWidth={3}
-                      fill="transparent"
+                      fill="#6366f1"
+                      fillOpacity={0.2}
                     />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -181,7 +132,7 @@ export default function DashboardPage() {
                     className="flex justify-between items-center gap-4"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 font-bold text-xs flex-shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 font-bold text-xs shrink-0">
                         {item.category?.substring(0, 2).toUpperCase()}
                       </div>
 
