@@ -5,7 +5,7 @@ import {
   useGetTransactionsQuery,
   useDeleteTransactionMutation,
 } from "../app/api";
-import { Trash2, Edit3, Plus, ChevronLeft, ChevronRight, Loader2, Edit } from "lucide-react";
+import { Trash2, Edit3, Plus, ChevronLeft, ChevronRight, Loader2, Edit, FilterX } from "lucide-react";
 import TransactionModal from "../components/TransactionModal";
 
 export default function Transactions() {
@@ -81,45 +81,31 @@ export default function Transactions() {
         </button>
 
       </div>
-      <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col sm:flex-row gap-4 sm:items-end">
-
-        <div className="flex flex-col">
-          <label className="text-xs font-bold text-slate-400 mb-1">Start Date</label>
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => {
-              setStartDate(e.target.value);
-              setPage(1);
-            }}
-            className="px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-          />
+      <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-end gap-4">
+        <div className="flex-1 min-w-50">
+          <label className="block text-[11px] uppercase tracking-wider font-bold text-slate-400 mb-1.5 ml-1">Date Range</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => { setStartDate(e.target.value); setPage(1); }}
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+            />
+            <span className="text-slate-300">to</span>
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => { setEndDate(e.target.value); setPage(1); }}
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+            />
+          </div>
         </div>
-
-        <div className="flex flex-col">
-          <label className="text-xs font-bold text-slate-400 mb-1">End Date</label>
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => {
-              setEndDate(e.target.value);
-              setPage(1);
-            }}
-            className="px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-          />
-        </div>
-
         <button
-          onClick={() => {
-            setStartDate("");
-            setEndDate("");
-            setPage(1);
-          }}
-          className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-semibold transition-all"
+          onClick={() => { setStartDate(""); setEndDate(""); setPage(1); }}
+          className="flex items-center gap-2 px-4 py-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg text-sm font-bold transition-all"
         >
-          Clear
+          <FilterX size={16} /> Reset
         </button>
-
       </div>
       <div className="block md:hidden space-y-3">
         {data?.data?.map((t: any) => (
@@ -166,89 +152,118 @@ export default function Transactions() {
           </div>
         ))}
       </div>
-      <div className="hidden md:block bg-white rounded-4xl shadow-sm border border-slate-50 overflow-hidden">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="border-b border-slate-50">
-              <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-wider">Description</th>
-              <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-wider">Category</th>
-              <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-wider">Type</th>
-              <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-wider text-right">Amount</th>
-              <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-50">
-            {data?.data?.map((t: any) => (
-              <tr key={t.id} className="hover:bg-slate-50/50 transition-colors">
-                <td className="px-8 py-5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-xs">
-                      {t.description.substring(0, 2).toUpperCase()}
-                    </div>
-                    <span className="font-bold text-slate-700">{t.description}</span>
-                  </div>
-                </td>
-                    <td className="px-8 py-5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-xs">
-                      {t.category.substring(0, 2).toUpperCase()}
-                    </div>
-                    <span className="font-bold text-slate-700">{t.category}</span>
-                  </div>
-                </td>
-                <td className="px-8 py-5">
-                  <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase ${t.type === 'income' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
-                    }`}>
-                    {t.type}
-                  </span>
-                </td>
-                <td className={`px-8 py-5 text-right font-black text-sm ${t.type === 'income' ? 'text-emerald-500' : 'text-slate-700'
-                  }`}>
-                  {t.type === 'income' ? '+' : '-'}ETB {t.amount.toLocaleString()}
-                </td>
-                <td className="px-8 py-5">
-                  <div className="flex items-center justify-center gap-2">
-                    <button
-                      onClick={() => handleEdit(t)}
-                      className="p-2 text-slate-400 cursor-pointer hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
-                      title="Edit"
-                    >
-                      <Edit size={18} />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteClick(t)}
-                      disabled={deletingId === t.id}
-                      className="p-2 text-slate-400 cursor-pointer hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all disabled:opacity-50"
-                      title="Delete"
-                    >
-                      {deletingId === t.id ? (
-                        <Loader2 size={18} className="animate-spin" />
-                      ) : (
-                        <Trash2 size={18} />
-                      )}
-                    </button>
-                  </div>
-                </td>
+      <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 sticky top-0 z-10">
+              <tr className="text-slate-500 uppercase text-xs tracking-wider">
+                <th className="px-6 py-4 text-left font-semibold">Description</th>
+                <th className="px-6 py-4 text-left font-semibold">Category</th>
+                <th className="px-6 py-4 text-left font-semibold">Type</th>
+                <th className="px-6 py-4 text-left font-semibold">Date</th>
+                <th className="px-6 py-4 text-right font-semibold">Amount</th>
+                <th className="px-6 py-4 text-center font-semibold">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="px-8 py-5 bg-slate-50/30 border-t border-slate-50 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs font-bold text-slate-400">
-            Showing Page <span className="text-indigo-600">{data?.page || 1}</span> of {data?.totalPages || 1}
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {data?.data?.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="text-center py-16 text-slate-400">
+                    No transactions found
+                  </td>
+                </tr>
+              ) : (
+                data?.data?.map((t: any, index: number) => (
+                  <tr
+                    key={t.id}
+                    className={`
+                transition-colors 
+                hover:bg-slate-50
+                ${index % 2 === 0 ? "bg-white" : "bg-slate-50/40"}
+              `}
+                  >  <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center font-semibold text-xs">
+                          {t.description.substring(0, 2).toUpperCase()}
+                        </div>
+                        <span className="font-medium text-slate-700">
+                          {t.description}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-slate-600 font-medium">
+                      {t.category}
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-semibold ${t.type === "income"
+                          ? "bg-emerald-100 text-emerald-600"
+                          : "bg-rose-100 text-rose-600"
+                          }`}
+                      >
+                        {t.type}
+                      </span>
+                    </td>
+
+                    <td className="px-6 py-4 text-slate-500">
+                      {new Date(t.date).toLocaleDateString()}
+                    </td>
+                    <td
+                      className={`px-6 py-4 text-right font-semibold ${t.type === "income"
+                        ? "text-emerald-600"
+                        : "text-rose-600"
+                        }`}
+                    >
+                      {t.type === "income" ? "+" : "-"} ETB{" "}
+                      {t.amount.toLocaleString()}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex justify-center gap-2">
+                        <button
+                          onClick={() => handleEdit(t)}
+                          className="p-2 rounded-md text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition"
+                        >
+                          <Edit size={16} />
+                        </button>
+
+                        <button
+                          onClick={() => handleDeleteClick(t)}
+                          disabled={deletingId === t.id}
+                          className="p-2 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition disabled:opacity-40"
+                        >
+                          {deletingId === t.id ? (
+                            <Loader2 size={16} className="animate-spin" />
+                          ) : (
+                            <Trash2 size={16} />
+                          )}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+        <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center">
+          <p className="text-sm text-slate-500">
+            Page <span className="font-semibold text-indigo-600">{data?.page || 1}</span> of{" "}
+            {data?.totalPages || 1}
           </p>
-          <div className="flex gap-2">
+
+          <div className="flex items-center gap-2">
             <button
               disabled={page === 1}
-              onClick={() => setPage(p => p - 1)}
-              className="p-2 bg-white border border-slate-200 rounded-lg disabled:opacity-30 hover:bg-slate-50 transition-all"
+              onClick={() => setPage((p) => p - 1)}
+              className="px-3 py-1.5 text-sm border rounded-md bg-white hover:bg-slate-100 disabled:opacity-40"
             >
               <ChevronLeft size={16} />
             </button>
+
             <button
               disabled={page === (data?.totalPages || 1)}
-              onClick={() => setPage(p => p + 1)}
-              className="p-2 bg-white border border-slate-200 rounded-lg disabled:opacity-30 hover:bg-slate-50 transition-all"
+              onClick={() => setPage((p) => p + 1)}
+              className="px-3 py-1.5 text-sm border rounded-md bg-white hover:bg-slate-100 disabled:opacity-40"
             >
               <ChevronRight size={16} />
             </button>
