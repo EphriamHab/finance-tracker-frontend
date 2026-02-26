@@ -4,7 +4,7 @@ export const api = createApi({
   reducerPath: "api",
   tagTypes: ["Transactions", "Summary"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://finance-tracker-backend-63e3.onrender.com/api",
+    baseUrl: "https://finance-tracker-backend-36nj.onrender.com/api",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
