@@ -131,7 +131,7 @@ export default function Transactions() {
             <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
               <button
                 onClick={() => handleEdit(t)}
-                className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
+                className="p-2 text-slate-400 cursor-pointer hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
                 title="Edit"
               >
                 <Edit3 size={18} />
@@ -139,7 +139,7 @@ export default function Transactions() {
               <button
                 onClick={() => handleDeleteClick(t)}
                 disabled={deletingId === t.id}
-                className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all disabled:opacity-50"
+                className="p-2 text-slate-400 cursor-pointer hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all disabled:opacity-50"
                 title="Delete"
               >
                 {deletingId === t.id ? (
@@ -221,7 +221,7 @@ export default function Transactions() {
                       <div className="flex justify-center gap-2">
                         <button
                           onClick={() => handleEdit(t)}
-                          className="p-2 rounded-md text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition"
+                          className="p-2 rounded-md text-slate-400 cursor-pointer hover:text-indigo-600 hover:bg-indigo-50 transition"
                         >
                           <Edit size={16} />
                         </button>
@@ -229,7 +229,7 @@ export default function Transactions() {
                         <button
                           onClick={() => handleDeleteClick(t)}
                           disabled={deletingId === t.id}
-                          className="p-2 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition disabled:opacity-40"
+                          className="p-2 rounded-md text-slate-400 cursor-pointer hover:text-rose-600 hover:bg-rose-50 transition disabled:opacity-40"
                         >
                           {deletingId === t.id ? (
                             <Loader2 size={16} className="animate-spin" />
