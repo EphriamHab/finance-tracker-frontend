@@ -170,6 +170,7 @@ export default function Transactions() {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-slate-50">
+              <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-wider">Description</th>
               <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-wider">Category</th>
               <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-wider">Type</th>
               <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-wider text-right">Amount</th>
@@ -180,6 +181,14 @@ export default function Transactions() {
             {data?.data?.map((t: any) => (
               <tr key={t.id} className="hover:bg-slate-50/50 transition-colors">
                 <td className="px-8 py-5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-xs">
+                      {t.description.substring(0, 2).toUpperCase()}
+                    </div>
+                    <span className="font-bold text-slate-700">{t.description}</span>
+                  </div>
+                </td>
+                    <td className="px-8 py-5">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-xs">
                       {t.category.substring(0, 2).toUpperCase()}

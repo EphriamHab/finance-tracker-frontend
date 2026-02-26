@@ -11,6 +11,7 @@ import {
     CheckCircle2,
     Wallet,
 } from "lucide-react";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -28,8 +29,10 @@ const RegisterPage = () => {
         try {
             await register(formData).unwrap();
             navigate("/login");
+            toast.success("Profile created successfully! Please log in.");
         } catch (err) {
             console.error("Failed to register:", err);
+            toast.error("Registration failed. This profile name might be taken.");
         }
     };
 

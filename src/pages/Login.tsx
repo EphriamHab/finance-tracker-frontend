@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useLoginMutation } from "../app/api";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff, Lock, User, ArrowRight, Wallet } from "lucide-react";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -21,8 +22,10 @@ const LoginPage = () => {
       const result = await login(formData).unwrap();
       localStorage.setItem("token", result.token);
       navigate("/dashboard");
+      toast.success("Logged in successfully!");
     } catch (err) {
       console.error("Failed to login:", err);
+      toast.error("Authentication failed. Please check your username and password.");
     }
   };
 
