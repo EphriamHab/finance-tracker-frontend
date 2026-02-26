@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from 'react';
 import { useLoginMutation } from '../app/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Lock, User, ArrowRight, Wallet } from 'lucide-react';
@@ -9,7 +10,7 @@ const LoginPage = () => {
   const [login, { isLoading, error }] = useLoginMutation();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       const result = await login(formData).unwrap();

@@ -13,7 +13,7 @@ export default function Transactions() {
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
 
-  const { data, isLoading, isFetching } = useGetTransactionsQuery({
+  const { data, isLoading } = useGetTransactionsQuery({
     page,
     startDate: startDate || undefined,
     endDate: endDate || undefined,

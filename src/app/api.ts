@@ -33,6 +33,7 @@ export const api = createApi({
         url: "/transactions",
         params: {
           page,
+          limit: 5,
           startDate,
           endDate,
         },
