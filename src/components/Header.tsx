@@ -72,16 +72,16 @@ const Header = ({ collapsed, setCollapsed, setMobileOpen }: any) => {
             onFocus={() => setOpen(true)}
             onBlur={() => setTimeout(() => setOpen(false), 150)}
             placeholder="Search..."
-            className="w-full pl-10 pr-4 py-2 bg-white rounded-xl border border-slate-200 shadow-sm focus:ring-2 focus:ring-indigo-100"
+            className="w-full pl-10 pr-4 py-2 bg-white rounded-xl border border-slate-200 shadow-sm focus:ring-1 focus:ring-indigo-100"
           />
 
           {open && results.length > 0 && (
-            <div className="absolute z-50 mt-2 w-full bg-background border border-border rounded-md shadow-lg max-h-64 overflow-auto">
+            <div className="absolute z-50 mt-2 w-full bg-white border border-slate-200 rounded-md shadow-lg max-h-64 overflow-auto">
               {results.map((item) => (
                 <button
                   key={item.path}
                   onMouseDown={() => handleSelect(item.path)}
-                  className="w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors cursor-pointer"
+                  className="w-full text-left px-3 py-2 text-sm hover:bg-slate-100 transition-colors cursor-pointer"
                 >
                   {item.label}
                 </button>
@@ -90,7 +90,7 @@ const Header = ({ collapsed, setCollapsed, setMobileOpen }: any) => {
           )}
 
           {open && query && results.length === 0 && (
-            <div className="absolute z-50 mt-2 w-full bg-background border border-border rounded-md shadow-lg px-3 py-2 text-sm text-muted-foreground">
+            <div className="absolute z-50 mt-2 w-full bg-white border border-slate-200 rounded-md shadow-lg px-3 py-2 text-sm text-slate-500">
               No results found
             </div>
           )}
