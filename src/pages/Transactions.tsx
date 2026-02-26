@@ -75,7 +75,7 @@ export default function Transactions() {
         </div>
         <button
           onClick={handleAddNew}
-          className="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-indigo-100 flex items-center gap-2 hover:bg-indigo-700 transition-all w-fit justify-center"
+          className="bg-indigo-600 cursor-pointer text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-indigo-100 flex items-center gap-2 hover:bg-indigo-700 transition-all w-fit justify-center"
         >
           <Plus size={18} /> Add Transaction
         </button>
@@ -195,13 +195,13 @@ export default function Transactions() {
                 </td>
                 <td className={`px-8 py-5 text-right font-black text-sm ${t.type === 'income' ? 'text-emerald-500' : 'text-slate-700'
                   }`}>
-                  {t.type === 'income' ? '+' : '-'}${t.amount.toLocaleString()}
+                  {t.type === 'income' ? '+' : '-'}ETB {t.amount.toLocaleString()}
                 </td>
                 <td className="px-8 py-5">
                   <div className="flex items-center justify-center gap-2">
                     <button
                       onClick={() => handleEdit(t)}
-                      className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
+                      className="p-2 text-slate-400 cursor-pointer hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
                       title="Edit"
                     >
                       <Edit size={18} />
@@ -209,7 +209,7 @@ export default function Transactions() {
                     <button
                       onClick={() => handleDeleteClick(t)}
                       disabled={deletingId === t.id}
-                      className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all disabled:opacity-50"
+                      className="p-2 text-slate-400 cursor-pointer hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all disabled:opacity-50"
                       title="Delete"
                     >
                       {deletingId === t.id ? (
@@ -258,7 +258,7 @@ export default function Transactions() {
             <div className="flex justify-end gap-3">
               <button
                 onClick={handleDeleteCancel}
-                className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors"
+                className="px-4 py-2 text-sm cursor-pointer font-medium text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors"
                 disabled={deletingId === deleteConfirm.id}
               >
                 Cancel
@@ -266,7 +266,7 @@ export default function Transactions() {
               <button
                 onClick={handleDeleteConfirm}
                 disabled={deletingId === deleteConfirm.id}
-                className="px-4 py-2 text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50"
+                className="px-4 py-2 text-sm cursor-pointer font-medium text-white bg-rose-600 hover:bg-rose-700 rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50"
               >
                 {deletingId === deleteConfirm.id ? (
                   <>

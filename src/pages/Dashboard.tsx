@@ -80,7 +80,7 @@ export default function DashboardPage() {
         <button
           onClick={handleExport}
           disabled={!recent?.data?.length}
-          className="w-fit bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-medium shadow hover:bg-indigo-700 transition flex items-center justify-center gap-2 disabled:opacity-50"        >
+          className="w-fit bg-indigo-600 cursor-pointer text-white px-5 py-2.5 rounded-xl font-medium shadow hover:bg-indigo-700 transition flex items-center justify-center gap-2 disabled:opacity-50"        >
           Export Report
         </button>
       </div>
@@ -148,11 +148,11 @@ export default function DashboardPage() {
 
                     <p
                       className={`font-bold text-sm whitespace-nowrap ${item.type === "expense"
-                        ? "text-slate-700"
+                        ? "text-red-600"
                         : "text-emerald-500"
                         }`}
                     >
-                      {item.type === "expense" ? "-" : "+"}$
+                      {item.type === "expense" ? "-" : "+"}ETB
                       {item.amount?.toFixed(2)}
                     </p>
                   </div>
