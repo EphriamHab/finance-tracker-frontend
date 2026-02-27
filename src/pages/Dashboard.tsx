@@ -30,7 +30,8 @@ export default function DashboardPage() {
 
   const loading = summaryLoading || transactionsLoading;
 
- const chartData = useMemo(() => {
+  const chartData = useMemo(() => {
+
     if (!summary?.byCategory) return [];
 
     return summary.byCategory.map((item: any) => ({
@@ -101,7 +102,6 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             <div className="lg:col-span-2 bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
               <h3 className="font-bold text-lg mb-6">Cash Flow</h3>
-
               <div className="w-full h-64">
                 <ResponsiveContainer width="100%" height="100%">
                <AreaChart data={chartData}>
