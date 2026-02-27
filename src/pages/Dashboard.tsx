@@ -30,14 +30,16 @@ export default function DashboardPage() {
 
   const loading = summaryLoading || transactionsLoading;
 
-  const chartData = useMemo(() => {
+ const chartData = useMemo(() => {
     if (!summary?.byCategory) return [];
 
     return summary.byCategory.map((item: any) => ({
       name: item.category,
-      amount: item._sum?.amount || 0,
+      income: item.type === "income" ? item._sum?.amount || 0 : 0,
+      expense: item.type === "expense" ? item._sum?.amount || 0 : 0,
     }));
   }, [summary]);
+
 
 
   const handleExport = () => {
@@ -102,18 +104,25 @@ export default function DashboardPage() {
 
               <div className="w-full h-64">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={chartData}>
+               <AreaChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
-
                     <Area
                       type="monotone"
-                      dataKey="amount"
-                      stroke="#6366f1"
+                      dataKey="income"
+                      stroke="#16a34a"
                       strokeWidth={3}
-                      fill="#6366f1"
+                      fill="#16a34a"
+                      fillOpacity={0.2}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="expense"
+                      stroke="#dc2626"
+                      strokeWidth={3}
+                      fill="#dc2626"
                       fillOpacity={0.2}
                     />
                   </AreaChart>
