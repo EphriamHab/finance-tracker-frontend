@@ -1,10 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type {
+  LoginRequest,
+  RegisterRequest,
+  SummaryResponse,
+  TransactionRequest,
+  TransactionResponse,
+  TransactionsResponse,
+} from "../types";
 
 export const api = createApi({
   reducerPath: "api",
   tagTypes: ["Transactions", "Summary"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://finance-tracker-backend-36nj.onrender.com/api",
+    baseUrl: "http://localhost:5000/api",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
@@ -14,26 +22,32 @@ export const api = createApi({
     },
   }),
   endpoints: (builder) => ({
-    login: builder.mutation({
+    login: builder.mutation<{ token: string }, LoginRequest>({
       query: (data) => ({
         url: "/auth/login",
         method: "POST",
         body: data,
       }),
     }),
-    register: builder.mutation({
+    register: builder.mutation<
+      { message: string; userId?: string },
+      RegisterRequest
+    >({
       query: (data) => ({
         url: "/auth/register",
         method: "POST",
         body: data,
       }),
     }),
-    getTransactions: builder.query({
-      query: ({ page = 1, startDate, endDate }) => ({
+    getTransactions: builder.query<
+      TransactionsResponse,
+      { page?: number; limit?: number; startDate?: string; endDate?: string }
+    >({
+      query: ({ page = 1, limit = 5, startDate, endDate }) => ({
         url: "/transactions",
         params: {
           page,
-          limit: 5,
+          limit,
           startDate,
           endDate,
         },
@@ -41,12 +55,12 @@ export const api = createApi({
       providesTags: ["Transactions"],
     }),
 
-    getSummary: builder.query({
+    getSummary: builder.query<SummaryResponse, void>({
       query: () => "/summary",
       providesTags: ["Summary"],
     }),
 
-    createTransaction: builder.mutation({
+    createTransaction: builder.mutation<TransactionResponse, TransactionRequest>({
       query: (data) => ({
         url: "/transactions",
         method: "POST",
@@ -54,7 +68,10 @@ export const api = createApi({
       }),
       invalidatesTags: ["Transactions", "Summary"],
     }),
-    updateTransaction: builder.mutation({
+    getTransaction: builder.query<TransactionResponse, string>({
+      query: (id) => `/transactions/${id}`,
+    }),
+    updateTransaction: builder.mutation<TransactionResponse, { id: string } & TransactionRequest>({
       query: ({ id, ...data }) => ({
         url: `/transactions/${id}`,
         method: "PUT",
@@ -62,7 +79,7 @@ export const api = createApi({
       }),
       invalidatesTags: ["Transactions", "Summary"],
     }),
-    deleteTransaction: builder.mutation({
+    deleteTransaction: builder.mutation<{ message: string }, string>({
       query: (id) => ({
         url: `/transactions/${id}`,
         method: "DELETE",
@@ -79,6 +96,7 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useGetTransactionsQuery,
+  useGetTransactionQuery,
   useGetSummaryQuery,
   useCreateTransactionMutation,
   useUpdateTransactionMutation,

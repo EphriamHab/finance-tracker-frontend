@@ -5,10 +5,12 @@ import {
   useGetTransactionsQuery,
   useDeleteTransactionMutation,
 } from "../app/api";
-import { Trash2, Edit3, Plus, ChevronLeft, ChevronRight, Loader2, Edit, FilterX } from "lucide-react";
+import { Trash2, Edit3, Plus, ChevronLeft, ChevronRight, Loader2, Edit, FilterX, Eye } from "lucide-react";
 import TransactionModal from "../components/TransactionModal";
+import { useNavigate } from "react-router-dom";
 
 export default function Transactions() {
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
@@ -22,8 +24,8 @@ export default function Transactions() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
-  const [deleteConfirm, setDeleteConfirm] = useState<{ id: number; category: string } | null>(null);
-  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [deleteConfirm, setDeleteConfirm] = useState<{ id: string; category: string } | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const handleEdit = (transaction: any) => {
     setSelectedTransaction(transaction);
@@ -130,11 +132,18 @@ export default function Transactions() {
             </div>
             <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
               <button
+                onClick={() => navigate(`/transactions/${t.id}`)}
+                className="p-2 rounded-md text-slate-400 cursor-pointer hover:text-indigo-600 hover:bg-indigo-50 transition"
+                title="View Details"
+              >
+                <Eye size={16} />
+              </button>
+              <button
                 onClick={() => handleEdit(t)}
                 className="p-2 text-slate-400 cursor-pointer hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
                 title="Edit"
               >
-                <Edit3 size={18} />
+                <Edit size={18} />
               </button>
               <button
                 onClick={() => handleDeleteClick(t)}
@@ -219,6 +228,13 @@ export default function Transactions() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex justify-center gap-2">
+                        <button
+                          onClick={() => navigate(`/transactions/${t.id}`)}
+                          className="p-2 rounded-md text-slate-400 cursor-pointer hover:text-indigo-600 hover:bg-indigo-50 transition"
+                          title="View Details"
+                        >
+                          <Eye size={16} />
+                        </button>
                         <button
                           onClick={() => handleEdit(t)}
                           className="p-2 rounded-md text-slate-400 cursor-pointer hover:text-indigo-600 hover:bg-indigo-50 transition"

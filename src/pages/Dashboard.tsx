@@ -14,12 +14,13 @@ import {
 } from "recharts";
 import { Loader2 } from "lucide-react";
 import SummaryCards from "../components/SummaryCards";
+import type { ByCategory } from "../types";
 
 export default function DashboardPage() {
   const {
     data: summary,
     isLoading: summaryLoading,
-  } = useGetSummaryQuery({});
+  } = useGetSummaryQuery();
   const { data: user } = useGetCurrentUserQuery({});
 
   const username = user?.username || "User";
@@ -34,7 +35,7 @@ export default function DashboardPage() {
 
     if (!summary?.byCategory) return [];
 
-    return summary.byCategory.map((item: any) => ({
+    return summary.byCategory.map((item: ByCategory) => ({
       name: item.category,
       income: item.type === "income" ? item._sum?.amount || 0 : 0,
       expense: item.type === "expense" ? item._sum?.amount || 0 : 0,

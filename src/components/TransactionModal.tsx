@@ -14,6 +14,7 @@ interface Props {
     initialData?: any;
 }
 
+type TransactionType = "income" | "expense";
 export default function TransactionModal({
     isOpen,
     onClose,
@@ -24,7 +25,13 @@ export default function TransactionModal({
     const [updateTransaction, { isLoading: isUpdating }] =
         useUpdateTransactionMutation();
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<{
+        description: string;
+        category: string;
+        type: TransactionType;
+        amount: string;
+        date: string;
+    }>({
         description: "",
         category: "",
         type: "expense",
@@ -174,7 +181,7 @@ export default function TransactionModal({
                             <select
                                 value={form.type}
                                 onChange={(e) =>
-                                    setForm({ ...form, type: e.target.value })
+                                    setForm({ ...form, type: e.target.value as TransactionType })
                                 }
                                 className="px-4 py-3 bg-slate-50 rounded-xl"
                             >

@@ -5,8 +5,25 @@ export interface User {
   createdAt: string;
 }
 
-export interface Transaction {
+export interface TransactionResponse {
   id: string;
+  amount: number;
+  category: string;
+  type: "income" | "expense";
+  date: string;
+  userId: string;
+  description?: string;
+  createdAt: string;
+}
+
+export interface TransactionsResponse {
+  data: TransactionResponse[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+export interface TransactionRequest {
   amount: number;
   category: string;
   type: "income" | "expense";
@@ -14,9 +31,29 @@ export interface Transaction {
   description?: string;
 }
 
+
 export interface SummaryResponse {
   totalIncome: number;
   totalExpenses: number;
   balance: number;
-  byCategory: { category: string; _sum: { amount: number } }[];
+  byCategory: { category: string; type: string; _sum: { amount: number } }[];
+}
+
+
+export interface ByCategory {
+  category: string;
+  type: string;
+  _sum: {
+    amount: number;
+  };
+}
+
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  username: string;
+  password: string;
 }
