@@ -5,7 +5,7 @@ import {
   useGetTransactionsQuery,
   useDeleteTransactionMutation,
 } from "../app/api";
-import { Trash2, Edit3, Plus, ChevronLeft, ChevronRight, Loader2, Edit, FilterX, Eye } from "lucide-react";
+import { Trash2, Plus, ChevronLeft, ChevronRight, Loader2, Edit, FilterX, Eye } from "lucide-react";
 import TransactionModal from "../components/TransactionModal";
 import { useNavigate } from "react-router-dom";
 
